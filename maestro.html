@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Maestro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Panel del Maestro</h1>
+    </header>
+    <main>
+        <!-- Gestión de Alumnos -->
+        <section>
+            <h2>Gestión de Alumnos</h2>
+            <form id="buscarAlumnoForm">
+                <label for="buscarAlumno">Buscar Alumno por Nombre:</label>
+                <input type="text" id="buscarAlumno" placeholder="Ejemplo: Juan Pérez">
+                <button type="submit">Buscar</button>
+            </form>
+            <div id="resultadosAlumno">
+                <!-- Resultados de búsqueda de alumnos -->
+            </div>
+        </section>
+
+        <!-- Registro de Avances -->
+        <section>
+            <h2>Registrar Avances</h2>
+            <form id="registrarAvancesForm">
+                <label for="alumno">Seleccionar Alumno:</label>
+                <select id="alumno">
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+                <label for="avance">Detalles del Avance:</label>
+                <textarea id="avance" required></textarea>
+                <button type="submit">Registrar</button>
+            </form>
+            <p id="estadoAvance"></p>
+        </section>
+
+        <!-- Clases y Horarios -->
+        <section>
+            <h2>Mis Clases</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Clase</th>
+                        <th>Horario</th>
+                        <th>Cupos Disponibles</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaClases">
+                    <!-- Las clases asignadas se cargan dinámicamente -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Recomendaciones -->
+        <section>
+            <h2>Enviar Recomendaciones</h2>
+            <form id="enviarRecomendacionForm">
+                <label for="alumnoRecomendacion">Seleccionar Alumno:</label>
+                <select id="alumnoRecomendacion">
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+                <label for="recomendacion">Recomendación:</label>
+                <textarea id="recomendacion" required></textarea>
+                <label for="enlaceVideo">Enlace a Video (Opcional):</label>
+                <input type="url" id="enlaceVideo" placeholder="https://ejemplo.com/video">
+                <button type="submit">Enviar</button>
+            </form>
+            <p id="estadoRecomendacion"></p>
+        </section>
+
+        <!-- Notificaciones de Cumpleaños -->
+        <section>
+            <h2>Cumpleaños de Alumnos</h2>
+            <ul id="cumpleaniosLista">
+                <!-- Cumpleaños se cargan dinámicamente -->
+            </ul>
+        </section>
+
+        <!-- Botón para cerrar sesión -->
+        <button id="logoutButton">Cerrar Sesión</button>
+    </main>
+    <footer>
+        <p>&copy; 2024 Sistema de Gestión Deportiva</p>
+    </footer>
+    <script src="maestro.js"></script>
+</body>
+</html>

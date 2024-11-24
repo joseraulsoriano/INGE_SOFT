@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrador</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Panel del Administrador</h1>
+    </header>
+    <main>
+        <!-- Gestión de Alumnos -->
+        <section>
+            <h2>Gestión de Alumnos</h2>
+            <button id="registrarAlumno">Registrar Alumno</button>
+            <div id="listaAlumnos">
+                <!-- Lista de alumnos cargada dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Gestión de Profesores -->
+        <section>
+            <h2>Gestión de Profesores</h2>
+            <button id="registrarProfesor">Registrar Profesor</button>
+            <div id="listaProfesores">
+                <!-- Lista de profesores cargada dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Gestión de Clases -->
+        <section>
+            <h2>Gestión de Clases</h2>
+            <button id="crearClase">Crear Clase</button>
+            <div id="listaClases">
+                <!-- Lista de clases cargada dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Estadísticas -->
+        <section>
+            <h2>Estadísticas</h2>
+            <canvas id="graficoEstadisticas" width="400" height="200"></canvas>
+        </section>
+
+        <!-- Pagos y Vencimientos -->
+        <section>
+            <h2>Pagos y Vencimientos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alumno</th>
+                        <th>Mes</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPagos">
+                    <!-- Los pagos se cargan dinámicamente -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Botón para cerrar sesión -->
+        <button id="logoutButton">Cerrar Sesión</button>
+    </main>
+    <footer>
+        <p>&copy; 2024 Sistema de Gestión Deportiva</p>
+    </footer>
+    <script src="admin.js"></script>
+</body>
+</html>
