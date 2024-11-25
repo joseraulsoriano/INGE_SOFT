@@ -32,7 +32,10 @@ function cargarListaAlumnos() {
         )
         .join("");
 }
-
+document.addEventListener("DOMContentLoaded", function () {
+    // Vincula el botón de "Registrar Alumno" con la función
+    document.getElementById("registrarAlumno").addEventListener("click", registrarAlumno);
+});
 
 function registrarAlumno() {
     // Datos del alumno
