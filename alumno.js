@@ -14,6 +14,45 @@ class Alumno {
         `;
     }
 
+    cargarDatosAdicionales() {
+        const datosContainer = document.getElementById("datosAlumno");
+        
+        // Mostrar historial de pagos
+        const tablaPagos = this.estadoPagos.map(pago => `
+            <tr>
+                <td>${pago.mes}</td>
+                <td>${pago.monto}</td>
+                <td>${pago.estado}</td>
+            </tr>
+        `).join("");
+
+        // Mostrar recomendaciones
+        const recomendacionesHTML = this.recomendaciones.length
+            ? this.recomendaciones.map(rec => `<p><strong>${rec.fecha}:</strong> ${rec.texto}</p>`).join("")
+            : "<p>No hay recomendaciones disponibles.</p>";
+        
+        // Mostrar número de reservas realizadas
+        const reservasHTML = `<p><strong>Reservas realizadas:</strong> ${this.reservas}</p>`;
+
+        datosContainer.innerHTML = `
+            <h3>Historial de Pagos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>${tablaPagos}</tbody>
+            </table>
+            <h3>Recomendaciones</h3>
+            ${recomendacionesHTML}
+            <h3>Reservas</h3>
+            ${reservasHTML}
+        `;
+    }
+
     // Editar perfil
     editarPerfil(campo, nuevoValor) {
         if (["telefono", "disciplinasPrevias", "descripcionDisciplinas", "fechaNacimiento"].includes(campo)) {
@@ -47,8 +86,6 @@ class Alumno {
                 : "<p>No hay recomendaciones disponibles.</p>";
         }
     }
-
-    // Otros métodos para gestionar pago y subir certificado siguen igual...
 }
 
 // Cargar datos desde la base simulada
@@ -62,7 +99,10 @@ async function cargarDatosAlumno() {
         const alumno = new Alumno(datosAlumno);
 
         // Inicializa las funcionalidades
-        document.addEventListener("DOMContentLoaded", () => alumno.cargarPerfil());
+        document.addEventListener("DOMContentLoaded", () => {
+            alumno.cargarPerfil();
+            alumno.cargarDatosAdicionales();
+        });
 
         document.getElementById("consultarRecomendaciones").addEventListener("click", () => {
             alumno.consultarRecomendaciones();
