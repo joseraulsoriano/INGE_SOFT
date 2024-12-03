@@ -1,0 +1,21 @@
+{
+    "alumnos": [
+        {
+            "nombre": "Juan Pérez",
+            "edad": 25,
+            "disciplinasPrevias": ["Yoga", "Danza"],
+            "email": "juan.perez@example.com",
+            "telefono": "1234567890",
+            "matricula": "2023456",
+            "estadoPagos": [
+                { "mes": "Enero", "monto": "$500", "estado": "Pagado" },
+                { "mes": "Febrero", "monto": "$500", "estado": "Pendiente" },
+                { "mes": "Marzo", "monto": "$500", "estado": "Pagado" }
+            ],
+            "recomendaciones": [
+                { "fecha": "2024-11-20", "texto": "Mejorar posturas en Yoga" },
+                { "fecha": "2024-11-22", "texto": "Practicar técnicas de respiración" }
+            ]
+        }
+    ]
+}
