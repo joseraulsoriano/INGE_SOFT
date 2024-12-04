@@ -2,27 +2,23 @@
     "alumnos": [
         {
             "nombre": "Juan Pérez",
-            "edad": 25,
-            "nivelEstudio": "Licenciatura",
-            "dondeEstudia": "Universidad XYZ",
+            "edad": 20,
+            "nivelEstudio": "Universitario",
+            "dondeEstudia": "Universidad Nacional",
             "queEstudia": "Ingeniería",
-            "interesDisciplina": "Mejorar condición física",
-            "disciplinasPrevias": ["Yoga", "Danza"],
-            "telefono": "1234567890",
+            "interesDisciplina": "Fútbol",
+            "disciplinasPrevias": ["Natación", "Baloncesto"],
+            "telefono": "123456789",
             "matricula": "2023456",
-            "fechaNacimiento": "1998-05-12",
+            "fechaNacimiento": "2003-01-15",
             "estadoPagos": [
-                { "mes": "Enero", "monto": "$500", "estado": "Pagado" },
-                { "mes": "Febrero", "monto": "$500", "estado": "Pendiente" },
-                { "mes": "Marzo", "monto": "$500", "estado": "Pagado" }
+                {"mes": "Enero", "estado": "Pagado"},
+                {"mes": "Febrero", "estado": "Pendiente"}
             ],
             "recomendaciones": [
-                { "fecha": "2024-11-20", "texto": "Mejorar posturas en Yoga" },
-                { "fecha": "2024-11-22", "texto": "Practicar técnicas de respiración" }
+                {"fecha": "2023-01-10", "texto": "Practicar más ejercicios de resistencia."}
             ],
-            "reservas": [
-                { "clase": "Yoga", "fecha": "2024-12-10", "estado": "Confirmada" }
-            ]
+            "reservas": []
         }
     ]
 }
