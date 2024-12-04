@@ -2,11 +2,11 @@ class Alumno {
     constructor(datos) {
         this.nombre = datos.nombre;
         this.edad = datos.edad;
-        this.nivelEstudio = datos.nivelEstudio;          // Nivel de estudio
-        this.dondeEstudia = datos.dondeEstudia;          // Donde estudia
-        this.queEstudia = datos.queEstudia;              // Qué estudia
-        this.interesDisciplina = datos.interesDisciplina; // Interés de disciplina
-        this.disciplinasPrevias = datos.disciplinasPrevias; // Disciplina previa
+        this.nivelEstudio = datos.nivelEstudio;
+        this.dondeEstudia = datos.dondeEstudia;
+        this.queEstudia = datos.queEstudia;
+        this.interesDisciplina = datos.interesDisciplina;
+        this.disciplinasPrevias = datos.disciplinasPrevias;
         this.telefono = datos.telefono;
         this.matricula = datos.matricula;
         this.fechaNacimiento = datos.fechaNacimiento;
@@ -61,16 +61,26 @@ class Alumno {
         }
     }
 
-    // Otros métodos siguen igual...
+    // Método para gestionar pagos
+    gestionarPago(mes) {
+        const pago = this.estadoPagos.find(p => p.mes === mes);
+        if (pago && pago.estado === "Pendiente") {
+            pago.estado = "Pagado";
+            alert("Pago registrado exitosamente.");
+        } else {
+            alert("No hay pagos pendientes para este mes.");
+        }
+    }
 }
 
-// Función para cargar los datos del alumno
+// Función para cargar los datos del alumno desde la base de datos simulada
 async function cargarDatosAlumno() {
     try {
+        // Cargar el archivo base_datos.txt
         const response = await fetch("base_datos.txt");
         const data = await response.json();
 
-        // Crea una instancia del alumno con los datos cargados
+        // Crear una instancia del alumno con los datos cargados
         const datosAlumno = data.alumnos[0]; // Suponemos un solo alumno
         const alumno = new Alumno(datosAlumno);
 

@@ -1,26 +1,28 @@
 {
-  "alumnos": [
-    {
-      "nombre": "Juan Pérez",
-      "edad": 25,
-      "nivelEstudio": "Licenciatura",
-      "dondeEstudia": "Universidad XYZ",
-      "queEstudia": "Ingeniería en Sistemas",
-      "interesDisciplina": "Mejorar la condición física",
-      "disciplinasPrevias": ["Yoga", "Danza"],
-      "telefono": "1234567890",
-      "matricula": "2023456",
-      "fechaNacimiento": "1999-06-15",
-      "estadoPagos": [
-        { "mes": "Enero", "monto": "$500", "estado": "Pagado" },
-        { "mes": "Febrero", "monto": "$500", "estado": "Pendiente" },
-        { "mes": "Marzo", "monto": "$500", "estado": "Pagado" }
-      ],
-      "recomendaciones": [
-        { "fecha": "2024-11-20", "texto": "Mejorar posturas en Yoga" },
-        { "fecha": "2024-11-22", "texto": "Practicar técnicas de respiración" }
-      ],
-      "reservas": 3
-    }
-  ]
+    "alumnos": [
+        {
+            "nombre": "Juan Pérez",
+            "edad": 25,
+            "nivelEstudio": "Licenciatura",
+            "dondeEstudia": "Universidad XYZ",
+            "queEstudia": "Ingeniería",
+            "interesDisciplina": "Mejorar condición física",
+            "disciplinasPrevias": ["Yoga", "Danza"],
+            "telefono": "1234567890",
+            "matricula": "2023456",
+            "fechaNacimiento": "1998-05-12",
+            "estadoPagos": [
+                { "mes": "Enero", "monto": "$500", "estado": "Pagado" },
+                { "mes": "Febrero", "monto": "$500", "estado": "Pendiente" },
+                { "mes": "Marzo", "monto": "$500", "estado": "Pagado" }
+            ],
+            "recomendaciones": [
+                { "fecha": "2024-11-20", "texto": "Mejorar posturas en Yoga" },
+                { "fecha": "2024-11-22", "texto": "Practicar técnicas de respiración" }
+            ],
+            "reservas": [
+                { "clase": "Yoga", "fecha": "2024-12-10", "estado": "Confirmada" }
+            ]
+        }
+    ]
 }
