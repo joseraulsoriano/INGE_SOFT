@@ -80,47 +80,51 @@ async function cargarDatosAlumno() {
         const response = await fetch("base_datos.txt");
         const data = await response.json();
 
-        // Crear una instancia del alumno con los datos cargados
-        const datosAlumno = data.alumnos[0]; // Suponemos un solo alumno
-        const alumno = new Alumno(datosAlumno);
+        // Verificar si los datos existen
+        if (data.alumnos && data.alumnos.length > 0) {
+            const datosAlumno = data.alumnos[0]; // Suponemos un solo alumno
+            const alumno = new Alumno(datosAlumno);
 
-        // Inicializa las funcionalidades
-        document.addEventListener("DOMContentLoaded", () => alumno.cargarPerfil());
+            // Inicializa las funcionalidades
+            document.addEventListener("DOMContentLoaded", () => alumno.cargarPerfil());
 
-        // Manejo de eventos
-        document.getElementById("consultarRecomendaciones").addEventListener("click", () => {
-            alumno.consultarRecomendaciones();
-        });
+            // Manejo de eventos
+            document.getElementById("consultarRecomendaciones").addEventListener("click", () => {
+                alumno.consultarRecomendaciones();
+            });
 
-        document.getElementById("editarPerfil").addEventListener("click", () => {
-            const opciones = ["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"];
-            const campo = prompt(`¿Qué campo deseas editar? Opciones: ${opciones.join(", ")}`);
-            
-            if (!opciones.includes(campo)) {
-                alert("Campo inválido.");
-                return;
-            }
-
-            let nuevoValor;
-            if (campo === "disciplinasPrevias") {
-                nuevoValor = prompt("Ingresa las nuevas disciplinas, separadas por comas:");
-                if (nuevoValor) {
-                    alumno.editarPerfil(campo, nuevoValor);
+            document.getElementById("editarPerfil").addEventListener("click", () => {
+                const opciones = ["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"];
+                const campo = prompt(`¿Qué campo deseas editar? Opciones: ${opciones.join(", ")}`);
+                
+                if (!opciones.includes(campo)) {
+                    alert("Campo inválido.");
+                    return;
                 }
-            } else {
-                nuevoValor = prompt(`Ingresa el nuevo valor para ${campo}:`);
-                if (nuevoValor) {
-                    alumno.editarPerfil(campo, nuevoValor);
-                }
-            }
-        });
 
-        document.getElementById("gestionarPago").addEventListener("click", () => {
-            const mes = prompt("Ingrese el mes del pago a gestionar:");
-            if (mes) {
-                alumno.gestionarPago(mes);
-            }
-        });
+                let nuevoValor;
+                if (campo === "disciplinasPrevias") {
+                    nuevoValor = prompt("Ingresa las nuevas disciplinas, separadas por comas:");
+                    if (nuevoValor) {
+                        alumno.editarPerfil(campo, nuevoValor);
+                    }
+                } else {
+                    nuevoValor = prompt(`Ingresa el nuevo valor para ${campo}:`);
+                    if (nuevoValor) {
+                        alumno.editarPerfil(campo, nuevoValor);
+                    }
+                }
+            });
+
+            document.getElementById("gestionarPago").addEventListener("click", () => {
+                const mes = prompt("Ingrese el mes del pago a gestionar:");
+                if (mes) {
+                    alumno.gestionarPago(mes);
+                }
+            });
+        } else {
+            console.error("No se encontraron datos de alumnos.");
+        }
     } catch (error) {
         console.error("Error al cargar los datos del alumno:", error);
     }
