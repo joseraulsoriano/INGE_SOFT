@@ -16,7 +16,10 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     const usuario = document.getElementById("usuario").value;
     const password = document.getElementById("password").value;
 
-    const usuarios = await cargarUsuarios();
+    const usuarios = await cargarUsuarios();  // Cargar los usuarios desde el archivo
+    console.log("Usuarios:", usuarios); // Verificar que los usuarios se cargan correctamente
+
+    // Verificar si el usuario existe y si la contraseña coincide
     if (usuarios && validarCredenciales(usuarios, usuario, password)) {
         redirigirPorRol(usuarios, usuario); // Llama a la función que decide el destino
     } else {
@@ -24,10 +27,15 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     }
 });
 
+// Función para validar credenciales
 function validarCredenciales(usuarios, usuario, password) {
-    return usuarios[usuario] && usuarios[usuario].password === password;
+    const usuarioEncontrado = usuarios.find(u => u.email === usuario); // Buscar por email
+    if (usuarioEncontrado && usuarioEncontrado.password === password) {
+        return true;
+    } else {
+        return false;
+    }
 }
-
 // Redirigir según el rol
 function redirigirPorRol(usuarios, usuario) {
     const rol = usuarios[usuario].rol;
