@@ -1,0 +1,7 @@
+{
+    "usuarios": {
+        "admin": { "rol": "administrador", "password": "admin123" },
+        "DOC1234": { "rol": "maestro", "password": "docpass" },
+        "2023456": { "rol": "alumno", "password": "alupass" }
+    }
+}

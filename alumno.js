@@ -1,7 +1,22 @@
 // Clase Alumno
 class Alumno {
     constructor(datos) {
-        Object.assign(this, datos);
+        this.fechaNacimiento = datos.fechaNacimiento;
+        this.domicilio = datos.domicilio;
+        this.lugarNacimiento = datos.lugarNacimiento;
+        this.peso = datos.peso;
+        this.altura = datos.altura;
+        this.nombre = datos.nombre;
+        this.edad = datos.edad;
+        this.nivelEstudio = datos.nivelEstudio;
+        this.dondeEstudia = datos.dondeEstudia;
+        this.queEstudia = datos.queEstudia;
+        this.interesDisciplina = datos.interesDisciplina;
+        this.disciplinasPrevias = datos.disciplinasPrevias;
+        this.telefono = datos.telefono;
+        this.matricula = datos.matricula;
+        this.estadoPagos = datos.estadoPagos;
+        this.recomendaciones = datos.recomendaciones;
     }
 
     // Método para cargar el perfil del alumno
