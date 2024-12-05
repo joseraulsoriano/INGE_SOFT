@@ -1,22 +1,7 @@
 // Clase Alumno
 class Alumno {
     constructor(datos) {
-        this.fechaNacimiento = datos.fechaNacimiento;
-        this.domicilio = datos.domicilio;
-        this.lugarNacimiento = datos.lugarNacimiento;
-        this.peso = datos.peso;
-        this.altura = datos.altura;
-        this.nombre = datos.nombre;
-        this.edad = datos.edad;
-        this.nivelEstudio = datos.nivelEstudio;
-        this.dondeEstudia = datos.dondeEstudia;
-        this.queEstudia = datos.queEstudia;
-        this.interesDisciplina = datos.interesDisciplina;
-        this.disciplinasPrevias = datos.disciplinasPrevias;
-        this.telefono = datos.telefono;
-        this.matricula = datos.matricula;
-        this.estadoPagos = datos.estadoPagos;
-        this.recomendaciones = datos.recomendaciones;
+        Object.assign(this, datos);
     }
 
     // Método para cargar el perfil del alumno
@@ -41,70 +26,23 @@ class Alumno {
             console.error("No se encontró el contenedor del perfil del alumno.");
         }
     }
-
-    // Método para consultar recomendaciones
-    consultarRecomendaciones() {
-        const contenedor = document.getElementById("recomendaciones");
-        const tienePagosPendientes = this.estadoPagos.some(p => p.estado === "Pendiente");
-
-        if (tienePagosPendientes) {
-            contenedor.innerHTML = `<p>Acceso Denegado: Favor de regularizar sus pagos.</p>`;
-        } else if (this.recomendaciones.length === 0) {
-            contenedor.innerHTML = `<p>De momento no cuentas con ninguna recomendación.</p>`;
-        } else {
-            contenedor.innerHTML = this.recomendaciones
-                .map(
-                    rec => `
-                        <div class="recomendacion">
-                            <p><strong>Fecha:</strong> ${rec.fecha}</p>
-                            <p>${rec.texto}</p>
-                        </div>
-                    `
-                )
-                .join("");
-        }
-    }
-
-    // Método para editar perfil
-    editarPerfil(campo, nuevoValor) {
-        if (["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"].includes(campo)) {
-            if (campo === "disciplinasPrevias") {
-                this[campo] = nuevoValor.split(","); // Asumimos que las disciplinas se ingresan separadas por comas
-                alert("Disciplinas actualizadas exitosamente.");
-            } else {
-                this[campo] = nuevoValor;
-                alert(`${campo} actualizado exitosamente.`);
-            }
-        } else {
-            alert("Este campo no puede ser editado.");
-        }
-    }
-
-    // Método para gestionar pagos
-    gestionarPago(mes, monto) {
-        const pago = this.estadoPagos.find(p => p.mes === mes);
-        if (pago && pago.estado === "Pendiente") {
-            pago.estado = "Pagado";
-            alert("Pago registrado exitosamente.");
-        } else {
-            alert("No hay pagos pendientes para este mes.");
-        }
-    }
 }
 
-// Función asíncrona para cargar los datos del alumno
+// Función asíncrona para cargar los datos del alumno desde el archivo usuarios.txt
 async function cargarDatosAlumno() {
     try {
-        // Cargar el archivo usuarios.txt
         const response = await fetch("usuarios.txt");
         const data = await response.json();
 
         // Obtener el correo del alumno desde el localStorage
         const usuarioActual = localStorage.getItem("usuario");
 
+        console.log("Usuarios en usuarios.txt:", data.usuarios); // Verifica los datos en el archivo usuarios.txt
+        console.log("Usuario actual:", usuarioActual); // Verifica el correo almacenado en localStorage
+
+        // Verificar si el correo está presente en los usuarios
         if (data.usuarios && usuarioActual) {
-            // Buscar el alumno en el JSON por su email
-            const alumnoData = Object.values(data.usuarios).find(user => user.email === usuarioActual && user.rol === "alumno");
+            const alumnoData = Object.values(data.usuarios).find(usuario => usuario.email === usuarioActual && usuario.rol === "alumno");
 
             if (alumnoData) {
                 const alumno = new Alumno(alumnoData); // Crear una instancia del Alumno con los datos cargados
