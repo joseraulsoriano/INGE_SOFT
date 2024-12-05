@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h1>Bienvenido Alumno</h1>
+        <h1>Bienvenido al Panel del Alumno</h1>
     </header>
     <main>
         <!-- Perfil del Alumno -->
@@ -20,29 +20,6 @@
             <button id="editarPerfil">Editar Perfil</button>
         </section>
 
-        <!-- Formulario para editar perfil -->
-        <section id="formularioEditar" style="display:none;">
-            <h2>Editar Perfil</h2>
-            <form id="editarFormulario">
-                <label for="campoEditar">Selecciona el campo a editar:</label>
-                <select id="campoEditar">
-                    <option value="nivelEstudio">Nivel de Estudio</option>
-                    <option value="dondeEstudia">Donde Estudia</option>
-                    <option value="queEstudia">Qué Estudia</option>
-                    <option value="interesDisciplina">Interés de Disciplina</option>
-                    <option value="disciplinasPrevias">Disciplinas Previas</option>
-                    <option value="telefono">Teléfono</option>
-                    <option value="fechaNacimiento">Fecha de Nacimiento</option>
-                </select>
-                <br>
-                <label for="nuevoValor">Nuevo valor:</label>
-                <input type="text" id="nuevoValor" required />
-                <br>
-                <button type="submit">Actualizar Información</button>
-                <button type="button" id="cancelarEdicion">Cancelar</button>
-            </form>
-        </section>
-
         <!-- Recomendaciones -->
         <section>
             <h2>Recomendaciones del Maestro</h2>
@@ -50,9 +27,6 @@
                 <p>Aquí aparecerán tus recomendaciones.</p>
             </div>
             <button id="consultarRecomendaciones">Consultar Recomendaciones</button>
-            <div id="detalleRecomendacion" style="display:none;">
-                <!-- Aquí se mostrarán los detalles de la recomendación -->
-            </div>
         </section>
 
         <!-- Historial de Pagos -->
@@ -67,10 +41,31 @@
                     </tr>
                 </thead>
                 <tbody id="tablaPagos">
-                    <!-- Se cargan los pagos dinámicamente -->
+                    <!-- Se cargarán los pagos dinámicamente -->
                 </tbody>
             </table>
             <button id="gestionarPago">Revisar Pago</button>
+        </section>
+
+        <!-- Formulario para Editar Perfil -->
+        <section id="formularioEditar" style="display:none;">
+            <h2>Editar Perfil</h2>
+            <form id="editarFormulario">
+                <label for="campoEditar">Selecciona el campo:</label>
+                <select id="campoEditar">
+                    <option value="nivelEstudio">Nivel de Estudio</option>
+                    <option value="dondeEstudia">Donde Estudia</option>
+                    <option value="queEstudia">Qué Estudia</option>
+                    <option value="interesDisciplina">Interés de Disciplina</option>
+                    <option value="disciplinasPrevias">Disciplinas Previas</option>
+                    <option value="telefono">Teléfono</option>
+                    <option value="fechaNacimiento">Fecha de Nacimiento</option>
+                </select>
+                <label for="nuevoValor">Nuevo Valor:</label>
+                <input type="text" id="nuevoValor" required>
+                <button type="submit">Actualizar Información</button>
+                <button type="button" id="cancelarEdicion">Cancelar</button>
+            </form>
         </section>
 
         <!-- Formulario de pago -->
@@ -84,11 +79,6 @@
                 <button type="submit">Iniciar Transacción</button>
                 <button type="button" id="cancelarPago">Cancelar</button>
             </form>
-        </section>
-
-        <!-- Botón para cerrar sesión -->
-        <section>
-            <button id="logoutButton">Cerrar Sesión</button>
         </section>
     </main>
     <footer>
