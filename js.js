@@ -27,15 +27,6 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     }
 });
 
-// Función para validar credenciales
-function validarCredenciales(usuarios, usuario, password) {
-    const usuarioEncontrado = usuarios.find(u => u.email === usuario); // Buscar por email
-    if (usuarioEncontrado && usuarioEncontrado.password === password) {
-        return true;
-    } else {
-        return false;
-    }
-}
 // Redirigir según el rol
 function redirigirPorRol(usuarios, usuario) {
     const rol = usuarios[usuario].rol;
