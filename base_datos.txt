@@ -16,11 +16,11 @@
             "peso": 70,
             "altura": 175,
             "estadoPagos": [
-                {"mes": "Enero", "estado": "Pagado"},
-                {"mes": "Febrero", "estado": "Pendiente"}
+                { "mes": "Enero", "estado": "Pagado" },
+                { "mes": "Febrero", "estado": "Pendiente" }
             ],
             "recomendaciones": [
-                {"fecha": "2023-01-10", "texto": "Practicar más ejercicios de resistencia."}
+                { "fecha": "2023-01-10", "texto": "Practicar más ejercicios de resistencia." }
             ]
         }
     ]
