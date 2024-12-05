@@ -20,6 +20,29 @@
             <button id="editarPerfil">Editar Perfil</button>
         </section>
 
+        <!-- Formulario para editar perfil -->
+        <section id="formularioEditar" style="display:none;">
+            <h2>Editar Perfil</h2>
+            <form id="editarFormulario">
+                <label for="campoEditar">Selecciona el campo a editar:</label>
+                <select id="campoEditar">
+                    <option value="nivelEstudio">Nivel de Estudio</option>
+                    <option value="dondeEstudia">Donde Estudia</option>
+                    <option value="queEstudia">Qué Estudia</option>
+                    <option value="interesDisciplina">Interés de Disciplina</option>
+                    <option value="disciplinasPrevias">Disciplinas Previas</option>
+                    <option value="telefono">Teléfono</option>
+                    <option value="fechaNacimiento">Fecha de Nacimiento</option>
+                </select>
+                <br>
+                <label for="nuevoValor">Nuevo valor:</label>
+                <input type="text" id="nuevoValor" required />
+                <br>
+                <button type="submit">Actualizar Información</button>
+                <button type="button" id="cancelarEdicion">Cancelar</button>
+            </form>
+        </section>
+
         <!-- Recomendaciones -->
         <section>
             <h2>Recomendaciones del Maestro</h2>
@@ -27,6 +50,9 @@
                 <p>Aquí aparecerán tus recomendaciones.</p>
             </div>
             <button id="consultarRecomendaciones">Consultar Recomendaciones</button>
+            <div id="detalleRecomendacion" style="display:none;">
+                <!-- Aquí se mostrarán los detalles de la recomendación -->
+            </div>
         </section>
 
         <!-- Historial de Pagos -->
@@ -45,6 +71,19 @@
                 </tbody>
             </table>
             <button id="gestionarPago">Revisar Pago</button>
+        </section>
+
+        <!-- Formulario de pago -->
+        <section id="formPago" style="display:none;">
+            <h2>Realizar Pago</h2>
+            <form id="pagoFormulario">
+                <label for="mesPago">Mes:</label>
+                <input type="text" id="mesPago" required>
+                <label for="montoPago">Monto:</label>
+                <input type="number" id="montoPago" required>
+                <button type="submit">Iniciar Transacción</button>
+                <button type="button" id="cancelarPago">Cancelar</button>
+            </form>
         </section>
 
         <!-- Botón para cerrar sesión -->

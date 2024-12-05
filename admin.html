@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Administrador</title>
@@ -9,61 +8,57 @@
 </head>
 <body>
     <header>
-        <h1>Panel del Administrador</h1>
+        <h1>Panel Administrador</h1>
     </header>
     <main>
-        <!-- Gestión de Alumnos -->
+        <!-- Lista de Alumnos -->
         <section>
-            <h2>Gestión de Alumnos</h2>
-            <button id="registrarAlumno">Registrar Alumno</button>
+            <h2>Alumnos</h2>
             <div id="listaAlumnos">
-                <!-- Lista de alumnos cargada dinámicamente -->
+                <!-- Aquí se cargarán los datos de los alumnos dinámicamente -->
             </div>
+            <button onclick="administrador.registrarAlumno()">Registrar Alumno</button>
         </section>
 
-        <!-- Gestión de Profesores -->
+        <!-- Lista de Profesores -->
         <section>
-            <h2>Gestión de Profesores</h2>
-            <button id="registrarProfesor">Registrar Profesor</button>
+            <h2>Profesores</h2>
             <div id="listaProfesores">
-                <!-- Lista de profesores cargada dinámicamente -->
+                <!-- Aquí se cargarán los datos de los profesores dinámicamente -->
             </div>
+            <button onclick="administrador.registrarProfesor()">Registrar Profesor</button>
         </section>
 
-        <!-- Gestión de Clases -->
+        <!-- Lista de Clases -->
         <section>
-            <h2>Gestión de Clases</h2>
-            <button id="crearClase">Crear Clase</button>
+            <h2>Clases</h2>
             <div id="listaClases">
-                <!-- Lista de clases cargada dinámicamente -->
+                <!-- Aquí se cargarán los datos de las clases dinámicamente -->
             </div>
+            <button onclick="administrador.crearClase()">Crear Clase</button>
         </section>
 
-        <!-- Estadísticas -->
-        <section>
-            <h2>Estadísticas</h2>
-            <canvas id="graficoEstadisticas" width="400" height="200"></canvas>
-        </section>
-
-        <!-- Pagos y Vencimientos -->
-        <section>
-            <h2>Pagos y Vencimientos</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Alumno</th>
-                        <th>Mes</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody id="tablaPagos">
-                    <!-- Los pagos se cargan dinámicamente -->
-                </tbody>
-            </table>
+        <!-- Formulario para editar perfil -->
+        <section id="formularioEditar" style="display:none;">
+            <h2>Editar Perfil</h2>
+            <form id="editarFormulario">
+                <label for="campoEditar">Selecciona el campo a editar:</label>
+                <select id="campoEditar">
+                    <!-- Aquí se cargarán los campos para editar -->
+                </select>
+                <br>
+                <label for="nuevoValor">Nuevo valor:</label>
+                <input type="text" id="nuevoValor" required />
+                <br>
+                <button type="submit">Actualizar Información</button>
+                <button type="button" id="cancelarEdicion">Cancelar</button>
+            </form>
         </section>
 
         <!-- Botón para cerrar sesión -->
-        <button id="logoutButton">Cerrar Sesión</button>
+        <section>
+            <button id="logoutButton">Cerrar Sesión</button>
+        </section>
     </main>
     <footer>
         <p>&copy; 2024 Sistema de Gestión Deportiva</p>

@@ -1,95 +1,247 @@
-// Clase Alumno
-class Alumno {
-    constructor(datos) {
-        Object.assign(this, datos);
+class Administrador {
+    constructor() {
+        this.cargarListaAlumnos();
+        this.cargarListaProfesores();
+        this.cargarListaClases();
     }
 
-    // Método para cargar el perfil del alumno
-    cargarPerfil() {
-        const perfilContainer = document.getElementById("perfilAlumno");
-        if (perfilContainer) {
-            perfilContainer.innerHTML = `
-                <p><strong>Nombre:</strong> ${this.nombre}</p>
-                <p><strong>Nivel de Estudio:</strong> ${this.nivelEstudio}</p>
-                <p><strong>Donde Estudia:</strong> ${this.dondeEstudia}</p>
-                <p><strong>Qué Estudia:</strong> ${this.queEstudia}</p>
-                <p><strong>Interés de Disciplina:</strong> ${this.interesDisciplina}</p>
-                <p><strong>Disciplinas Previas:</strong> ${this.disciplinasPrevias.join(", ")}</p>
-                <p><strong>Teléfono:</strong> ${this.telefono}</p>
-                <p><strong>Fecha de Nacimiento:</strong> ${this.fechaNacimiento}</p>
-                <p><strong>Domicilio:</strong> ${this.domicilio}</p>
-                <p><strong>Lugar de Nacimiento:</strong> ${this.lugarNacimiento}</p>
-                <p><strong>Peso:</strong> ${this.peso} kg</p>
-                <p><strong>Altura:</strong> ${this.altura} cm</p>
-            `;
-        } else {
-            console.error("No se encontró el contenedor del perfil del alumno.");
+    async cargarDatosAdmin() {
+        try {
+            const response = await fetch("admin_datos.txt");
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error al cargar los datos de usuarios:", error);
+            return null;
         }
     }
-}// Función asíncrona para cargar los datos del alumno
-async function cargarDatosAlumno() {
-    try {
-        const response = await fetch("admin_datos.txt"); // Cargar los datos desde el archivo
-        const data = await response.json();
-        
-        console.log("Usuarios cargados desde usuarios.txt:", data.usuarios);  // Verificar los usuarios cargados
-        const usuarioActual = localStorage.getItem("usuario");  // Obtener el usuario actual desde localStorage
-        console.log("Usuario actual en localStorage:", usuarioActual); // Verificar el valor de localStorage
 
-        if (!usuarioActual) {
-            console.error("No hay usuario guardado en localStorage");
+    async cargarListaAlumnos() {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const listaAlumnos = document.getElementById('listaAlumnos');
+        listaAlumnos.innerHTML = datos.usuarios
+            .filter(usuario => usuario.rol === 'alumno')
+            .map(alumno => `
+                <div>
+                    <p><strong>${alumno.nombre}</strong> - ${alumno.email}</p>
+                    <button onclick="administrador.editarAlumno('${alumno.email}')">Editar</button>
+                    <button onclick="administrador.eliminarAlumno('${alumno.email}')">Eliminar</button>
+                </div>
+            `)
+            .join('');
+    }
+
+    async registrarAlumno() {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const nuevoAlumno = {
+            nombre: prompt('Nombre del alumno:'),
+            email: prompt('Email del alumno:'),
+            matricula: prompt('Matrícula del alumno:'),
+            edad: parseInt(prompt('Edad del alumno:')),
+            nivelEstudio: prompt('Nivel de estudios:'),
+            certificadoMedico: confirm('¿Certificado médico recibido?'),
+            deslindeFirmado: confirm('¿Deslinde firmado?'),
+            rol: 'alumno',
+            estadoPagos: [],
+            recomendaciones: []
+        };
+
+        if (!nuevoAlumno.nombre || !nuevoAlumno.email || !nuevoAlumno.matricula || !nuevoAlumno.certificadoMedico || !nuevoAlumno.deslindeFirmado) {
+            alert('Información faltante.');
             return;
         }
 
-        const alumnoData = data.usuarios.find(usuario => usuario.email === usuarioActual && usuario.rol === "alumno");
-        console.log("Datos del alumno encontrado:", alumnoData); // Verificar los datos del alumno
-
-        if (alumnoData) {
-            const alumno = new Alumno(alumnoData);  // Crear una instancia de Alumno
-            alumno.cargarPerfil();  // Cargar el perfil del alumno en la página
-
-            // Agregar eventos a los botones
-            document.getElementById("consultarRecomendaciones").addEventListener("click", () => {
-                alumno.consultarRecomendaciones();
-            });
-
-            document.getElementById("editarPerfil").addEventListener("click", () => {
-                const opciones = ["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"];
-                const campo = prompt(`¿Qué campo deseas editar? Opciones: ${opciones.join(", ")}`);
-
-                if (!opciones.includes(campo)) {
-                    alert("Campo inválido.");
-                    return;
-                }
-
-                let nuevoValor;
-                if (campo === "disciplinasPrevias") {
-                    nuevoValor = prompt("Ingresa las nuevas disciplinas, separadas por comas:");
-                } else {
-                    nuevoValor = prompt(`Ingresa el nuevo valor para ${campo}:`);
-                }
-
-                if (nuevoValor) {
-                    alumno.editarPerfil(campo, nuevoValor);
-                }
-            });
-
-            document.getElementById("gestionarPago").addEventListener("click", () => {
-                const mes = prompt("Ingrese el mes que desea pagar:");
-                const monto = parseFloat(prompt("Ingrese el monto a pagar:"));
-                if (mes && !isNaN(monto)) {
-                    alumno.gestionarPago(mes, monto);
-                } else {
-                    alert("Datos inválidos.");
-                }
-            });
-        } else {
-            console.error("No se encontró el alumno.");
+        const yaExiste = datos.usuarios.some(user => user.email === nuevoAlumno.email);
+        if (yaExiste) {
+            alert('El alumno ya está registrado.');
+            return;
         }
-    } catch (error) {
-        console.error("Error al cargar los datos del alumno:", error);
+
+        datos.usuarios.push(nuevoAlumno);
+        await this.guardarDatosAdmin(datos);
+        alert(`Alumno ${nuevoAlumno.nombre} registrado exitosamente.`);
+        this.cargarListaAlumnos();
+    }
+
+    // Editar un alumno
+    async editarAlumno(email) {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const alumno = datos.usuarios.find(user => user.email === email);
+        if (!alumno) {
+            alert('Alumno no encontrado.');
+            return;
+        }
+
+        document.getElementById('campoEditar').innerHTML = `
+            <option value="nombre">Nombre</option>
+            <option value="email">Email</option>
+            <option value="matricula">Matrícula</option>
+            <option value="telefono">Teléfono</option>
+            <option value="fechaNacimiento">Fecha de Nacimiento</option>
+            <option value="domicilio">Domicilio</option>
+            <option value="lugarNacimiento">Lugar de Nacimiento</option>
+            <option value="peso">Peso</option>
+            <option value="altura">Altura</option>
+        `;
+        
+        document.getElementById('nuevoValor').value = "";
+        document.getElementById("formularioEditar").style.display = "block";
+
+        document.getElementById("editarFormulario").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const campo = document.getElementById("campoEditar").value;
+            const nuevoValor = document.getElementById("nuevoValor").value.trim();
+            if (nuevoValor) {
+                alumno[campo] = nuevoValor;
+                alert(`${campo} actualizado exitosamente.`);
+                this.guardarDatosAdmin(datos);
+                this.cargarListaAlumnos();
+                document.getElementById("formularioEditar").style.display = "none";
+            } else {
+                alert("Por favor ingrese un valor válido.");
+            }
+        });
+    }
+
+    // Eliminar un alumno
+    async eliminarAlumno(email) {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        datos.usuarios = datos.usuarios.filter(user => user.email !== email);
+        await this.guardarDatosAdmin(datos);
+        this.cargarListaAlumnos();
+    }
+
+    async cargarListaProfesores() {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const listaProfesores = document.getElementById('listaProfesores');
+        listaProfesores.innerHTML = datos.usuarios
+            .filter(usuario => usuario.rol === 'maestro')
+            .map(profesor => `
+                <div>
+                    <p><strong>${profesor.nombre}</strong> (${profesor.email})</p>
+                    <p><strong>Especialidades:</strong> ${profesor.especialidades.join(', ')}</p>
+                    <button onclick="administrador.editarProfesor('${profesor.email}')">Editar</button>
+                    <button onclick="administrador.eliminarProfesor('${profesor.email}')">Eliminar</button>
+                </div>
+            `)
+            .join('');
+    }
+
+    async editarProfesor(email) {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const profesor = datos.usuarios.find(user => user.email === email && user.rol === 'maestro');
+        if (!profesor) {
+            alert('Profesor no encontrado.');
+            return;
+        }
+
+        document.getElementById('campoEditar').innerHTML = `
+            <option value="nombre">Nombre</option>
+            <option value="email">Email</option>
+            <option value="especialidades">Especialidades</option>
+        `;
+
+        document.getElementById('nuevoValor').value = "";
+        document.getElementById("formularioEditar").style.display = "block";
+
+        document.getElementById("editarFormulario").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const campo = document.getElementById("campoEditar").value;
+            const nuevoValor = document.getElementById("nuevoValor").value.trim();
+            if (nuevoValor) {
+                if (campo === "especialidades") {
+                    profesor[campo] = nuevoValor.split(','); 
+                } else {
+                    profesor[campo] = nuevoValor;
+                }
+                alert(`${campo} actualizado exitosamente.`);
+                this.guardarDatosAdmin(datos);
+                this.cargarListaProfesores();
+                document.getElementById("formularioEditar").style.display = "none";
+            } else {
+                alert("Por favor ingrese un valor válido.");
+            }
+        });
+    }
+
+    async cargarListaClases() {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const listaClases = document.getElementById('listaClases');
+        listaClases.innerHTML = datos.clases
+            .map(clase => `
+                <div>
+                    <p><strong>${clase.disciplina}</strong> - ${clase.horario}</p>
+                    <p><strong>Profesor:</strong> ${clase.profesor} | <strong>Cupos:</strong> ${clase.capacidad} | <strong>Alumnos:</strong> ${clase.alumnos.length}</p>
+                    <button onclick="administrador.editarClase('${clase.disciplina}')">Editar</button>
+                    <button onclick="administrador.eliminarClase('${clase.disciplina}')">Eliminar</button>
+                </div>
+            `)
+            .join('');
+    }
+
+    async editarClase(disciplina) {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const clase = datos.clases.find(c => c.disciplina === disciplina);
+        if (!clase) {
+            alert('Clase no encontrada.');
+            return;
+        }
+
+        document.getElementById('campoEditar').innerHTML = `
+            <option value="disciplina">Disciplina</option>
+            <option value="horario">Horario</option>
+            <option value="capacidad">Capacidad</option>
+        `;
+
+        document.getElementById('nuevoValor').value = "";
+        document.getElementById("formularioEditar").style.display = "block";
+
+        document.getElementById("editarFormulario").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const campo = document.getElementById("campoEditar").value;
+            const nuevoValor = document.getElementById("nuevoValor").value.trim();
+            if (nuevoValor) {
+                clase[campo] = (campo === "capacidad") ? parseInt(nuevoValor) : nuevoValor;
+                alert(`${campo} actualizado exitosamente.`);
+                this.guardarDatosAdmin(datos);
+                this.cargarListaClases();
+                document.getElementById("formularioEditar").style.display = "none";
+            } else {
+                alert("Por favor ingrese un valor válido.");
+            }
+        });
+    }
+
+    async guardarDatosAdmin(datos) {
+        try {
+            await fetch("admin_datos.txt", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datos)
+            });
+        } catch (error) {
+            console.error("Error al guardar los datos de usuarios:", error);
+        }
     }
 }
 
-// Llama a la función para cargar los datos
-cargarDatosAlumno();
+// Crear una instancia de Administrador al cargar la página
+const administrador = new Administrador();

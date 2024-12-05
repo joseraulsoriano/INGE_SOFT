@@ -10,7 +10,15 @@
             "nombre": "Ana Gómez",
             "rol": "maestro",
             "email": "ana.gomez@example.com",
-            "password": "maestro123"
+            "password": "maestro123",
+            "especialidades": ["Yoga", "Meditación"],
+            "clases": [
+                {
+                    "disciplina": "Yoga",
+                    "horario": "10:00 AM - 11:00 AM",
+                    "alumnos": ["Carlos López"]
+                }
+            ]
         },
         {
             "nombre": "Carlos López",
@@ -31,13 +39,55 @@
             "peso": 70,
             "altura": 175,
             "estadoPagos": [
-                {"mes": "Enero", "estado": "Pagado"},
-                {"mes": "Febrero", "estado": "Pendiente"}
+                {"mes": "Enero", "estado": "Pagado", "monto": "500"},
+                {"mes": "Febrero", "estado": "Pendiente", "monto": "500"}
             ],
             "recomendaciones": [
                 {"fecha": "2023-01-10", "texto": "Practicar más ejercicios de resistencia."}
             ],
-            "reservas": []
+            "reservas": [
+                {
+                    "disciplina": "Yoga",
+                    "horario": "10:00 AM - 11:00 AM",
+                    "fecha": "2024-12-05"
+                }
+            ]
+        }
+    ],
+    "clases": [
+        {
+            "disciplina": "Yoga",
+            "horario": "10:00 AM - 11:00 AM",
+            "capacidad": 10,
+            "alumnos": ["Carlos López"],
+            "profesor": "Ana Gómez"
+        },
+        {
+            "disciplina": "Meditación",
+            "horario": "4:00 PM - 5:00 PM",
+            "capacidad": 5,
+            "alumnos": []
+        }
+    ],
+    "pagos": [
+        {
+            "alumno": "Carlos López",
+            "mes": "Enero",
+            "estado": "Pagado",
+            "monto": "500"
+        },
+        {
+            "alumno": "Carlos López",
+            "mes": "Febrero",
+            "estado": "Pendiente",
+            "monto": "500"
+        }
+    ],
+    "recomendaciones": [
+        {
+            "alumno": "Carlos López",
+            "fecha": "2023-01-10",
+            "texto": "Practicar más ejercicios de resistencia."
         }
     ]
 }

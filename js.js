@@ -1,7 +1,7 @@
 // Función para cargar los usuarios desde el archivo usuarios.txt
 async function cargarUsuarios() {
     try {
-        const response = await fetch("usuarios.txt");
+        const response = await fetch("admin_datos.txt");
         const data = await response.json();
         return data.usuarios; // Retorna los usuarios
     } catch (error) {
