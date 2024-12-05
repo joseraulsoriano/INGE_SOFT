@@ -92,85 +92,74 @@ class Alumno {
     }
 }
 
-// Función asíncrona para cargar los datos
+// Función asíncrona para cargar los datos del alumno
 async function cargarDatosAlumno() {
     try {
-        // Depuración inicial
-        console.log("Intentando cargar datos del alumno...");
-
-        const response = await fetch("admin_datos.txt");
-        if (!response.ok) {
-            throw new Error(`Error al cargar admin_datos.txt: ${response.statusText}`);
-        }
-
+        // Cargar el archivo usuarios.txt
+        const response = await fetch("usuarios.txt");
         const data = await response.json();
+
+        // Obtener el correo del alumno desde el localStorage
         const usuarioActual = localStorage.getItem("usuario");
 
-        // Depuración de datos
-        console.log("Datos cargados:", data);
-        console.log("Usuario actual:", usuarioActual);
-
         if (data.usuarios && usuarioActual) {
-            // Verifica que el alumno con el correo de usuarioActual esté en los datos cargados
-            const datosAlumno = data.usuarios.find(usuario => usuario.email === usuarioActual && usuario.rol === "alumno");
+            // Buscar el alumno en el JSON por su email
+            const alumnoData = Object.values(data.usuarios).find(user => user.email === usuarioActual && user.rol === "alumno");
 
-            if (datosAlumno) {
-                const alumno = new Alumno(datosAlumno);
+            if (alumnoData) {
+                const alumno = new Alumno(alumnoData); // Crear una instancia del Alumno con los datos cargados
+                alumno.cargarPerfil(); // Cargar el perfil en la página
 
-                // Inicializar la carga del perfil del alumno
-                document.addEventListener("DOMContentLoaded", () => {
-                    alumno.cargarPerfil();
+                // Agregar los eventos a los botones
+                document.getElementById("consultarRecomendaciones").addEventListener("click", () => {
+                    alumno.consultarRecomendaciones();
+                });
 
-                    // Botones y eventos
-                    document.getElementById("consultarRecomendaciones").addEventListener("click", () => {
-                        alumno.consultarRecomendaciones();
-                    });
+                document.getElementById("editarPerfil").addEventListener("click", () => {
+                    const opciones = ["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"];
+                    const campo = prompt(`¿Qué campo deseas editar? Opciones: ${opciones.join(", ")}`);
 
-                    document.getElementById("editarPerfil").addEventListener("click", () => {
-                        const opciones = ["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"];
-                        const campo = prompt(`¿Qué campo deseas editar? Opciones: ${opciones.join(", ")}`);
+                    if (!opciones.includes(campo)) {
+                        alert("Campo inválido.");
+                        return;
+                    }
 
-                        if (!opciones.includes(campo)) {
-                            alert("Campo inválido.");
-                            return;
-                        }
+                    let nuevoValor;
+                    if (campo === "disciplinasPrevias") {
+                        nuevoValor = prompt("Ingresa las nuevas disciplinas, separadas por comas:");
+                    } else {
+                        nuevoValor = prompt(`Ingresa el nuevo valor para ${campo}:`);
+                    }
 
-                        let nuevoValor;
-                        if (campo === "disciplinasPrevias") {
-                            nuevoValor = prompt("Ingresa las nuevas disciplinas, separadas por comas:");
-                        } else {
-                            nuevoValor = prompt(`Ingresa el nuevo valor para ${campo}:`);
-                        }
+                    if (nuevoValor) {
+                        alumno.editarPerfil(campo, nuevoValor);
+                    }
+                });
 
-                        if (nuevoValor) {
-                            alumno.editarPerfil(campo, nuevoValor);
-                        }
-                    });
+                // Manejo de pagos
+                document.getElementById("gestionarPago").addEventListener("click", () => {
+                    const mes = prompt("Ingrese el mes que desea pagar:");
+                    const monto = parseFloat(prompt("Ingrese el monto a pagar:"));
+                    if (mes && !isNaN(monto)) {
+                        alumno.gestionarPago(mes, monto);
+                    } else {
+                        alert("Datos inválidos.");
+                    }
+                });
 
-                    document.getElementById("gestionarPago").addEventListener("click", () => {
-                        const mes = prompt("Ingrese el mes que desea pagar:");
-                        const monto = parseFloat(prompt("Ingrese el monto a pagar:"));
-                        if (mes && !isNaN(monto)) {
-                            alumno.gestionarPago(mes, monto);
-                        } else {
-                            alert("Datos inválidos.");
-                        }
-                    });
-
-                    document.getElementById("logoutButton").addEventListener("click", () => {
-                        window.location.href = "index.html"; // Redirige a la página de login
-                    });
+                document.getElementById("logoutButton").addEventListener("click", () => {
+                    window.location.href = "index.html"; // Redirige a la página de login
                 });
             } else {
-                console.error("No se encontraron datos del alumno.");
+                console.error("No se encontró el alumno.");
             }
         } else {
-            console.error("No se encontraron datos de usuarios o usuario no autenticado.");
+            console.error("No se encontraron usuarios o usuario no autenticado.");
         }
     } catch (error) {
         console.error("Error al cargar los datos del alumno:", error);
     }
 }
 
-// Llama a la función para cargar los datos
+// Llamar a la función para cargar los datos del alumno
 cargarDatosAlumno();
