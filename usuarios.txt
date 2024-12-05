@@ -1,17 +1,19 @@
 {
-    "usuarios": {
-        "juan.perez@example.com": { 
-            "rol": "administrador", 
-            "password": "admin123" 
+    "usuarios": [
+        {
+            "rol": "administrador",
+            "email": "juan.perez@example.com",
+            "password": "admin123"
         },
-        "ana.gomez@example.com": { 
-            "rol": "maestro", 
-            "password": "docpass" 
+        {
+            "rol": "maestro",
+            "email": "ana.gomez@example.com",
+            "password": "maestro123"
         },
-        "carlos.lopez@example.com": { 
-            "rol": "alumno", 
-            "password": "alupass", 
-            "nombre": "Carlos López",
+        {
+            "rol": "alumno",
+            "email": "carlos.lopez@example.com",
+            "password": "alumno123",
             "edad": 20,
             "nivelEstudio": "Universitario",
             "dondeEstudia": "Universidad Nacional",
@@ -33,5 +35,5 @@
                 {"fecha": "2023-01-10", "texto": "Practicar más ejercicios de resistencia."}
             ]
         }
-    }
+    ]
 }

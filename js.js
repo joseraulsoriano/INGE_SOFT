@@ -33,6 +33,7 @@ function redirigirPorRol(usuarios, usuario) {
     const rol = usuarios[usuario].rol;
     localStorage.setItem("usuario", usuario); // Guardamos el usuario
     localStorage.setItem("rol", rol); // Guardamos el rol
+    console.log("Usuario guardado en localStorage:", usuario); // Verifica si el usuario está guardado
 
     if (rol === "administrador") {
         window.location.href = "admin.html"; // Redirige al panel del Administrador

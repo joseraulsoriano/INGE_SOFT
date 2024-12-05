@@ -27,22 +27,20 @@ class Alumno {
         }
     }
 }
-
-// Función asíncrona para cargar los datos del alumno desde el archivo usuarios.txt
 async function cargarDatosAlumno() {
     try {
-        const response = await fetch("usuarios.txt");
+        const response = await fetch("usuarios.txt"); // Intentamos cargar el archivo
         const data = await response.json();
+        console.log("Usuarios cargados desde usuarios.txt:", data.usuarios); // Verificamos que los datos se carguen correctamente
 
-        // Obtener el correo del alumno desde el localStorage
+        // Obtener el correo del alumno desde localStorage
         const usuarioActual = localStorage.getItem("usuario");
+        console.log("Usuario actual en localStorage:", usuarioActual); // Verificamos que se haya guardado correctamente
 
-        console.log("Usuarios en usuarios.txt:", data.usuarios); // Verifica los datos en el archivo usuarios.txt
-        console.log("Usuario actual:", usuarioActual); // Verifica el correo almacenado en localStorage
-
-        // Verificar si el correo está presente en los usuarios
         if (data.usuarios && usuarioActual) {
+            // Verificamos que el email en usuarios.txt coincida con el usuario actual
             const alumnoData = Object.values(data.usuarios).find(usuario => usuario.email === usuarioActual && usuario.rol === "alumno");
+            console.log("Datos del alumno encontrado:", alumnoData); // Verificamos los datos del alumno encontrado
 
             if (alumnoData) {
                 const alumno = new Alumno(alumnoData); // Crear una instancia del Alumno con los datos cargados
