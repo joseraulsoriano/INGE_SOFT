@@ -21,8 +21,7 @@
             ],
             "recomendaciones": [
                 {"fecha": "2023-01-10", "texto": "Practicar más ejercicios de resistencia."}
-            ],
-            "reservas": []
+            ]
         }
     ]
 }

@@ -69,21 +69,4 @@ footer {
     padding: 1rem;
     background: #333;
     color: white;
-}/* Estilo para los datos del perfil del alumno */
-#perfilAlumno {
-    background-color: #e0f7fa;  /* Fondo azul claro */
-    color: #0277bd;  /* Color de texto azul */
-    padding: 1rem;
-    border-radius: 5px;
-    margin-top: 10px;
-    font-size: 16px;
-}
-
-#perfilAlumno p {
-    margin: 10px 0;
-    font-weight: bold;
-}
-
-#perfilAlumno p strong {
-    color: #004d40; /* Color del texto del título (negrita) */
 }

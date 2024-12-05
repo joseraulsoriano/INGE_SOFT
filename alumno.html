@@ -20,29 +20,6 @@
             <button id="editarPerfil">Editar Perfil</button>
         </section>
 
-        <!-- Datos adicionales del Alumno -->
-        <section>
-            <h2>Mis Datos</h2>
-            <div id="datosAlumno">
-                <!-- Datos adicionales como historial de pagos, recomendaciones, etc. -->
-            </div>
-        </section>
-
-        <!-- Reserva de Clases -->
-        <section>
-            <h2>Reservar Clase</h2>
-            <form id="reservarClaseForm">
-                <label for="clase">Selecciona Clase:</label>
-                <select id="clase">
-                    <option value="Yoga">Yoga</option>
-                    <option value="Danza">Danza</option>
-                    <option value="Artes Marciales">Artes Marciales</option>
-                </select>
-                <button type="submit">Reservar</button>
-            </form>
-            <p id="estadoReserva"></p>
-        </section>
-
         <!-- Recomendaciones -->
         <section>
             <h2>Recomendaciones del Maestro</h2>
@@ -59,26 +36,14 @@
                 <thead>
                     <tr>
                         <th>Mes</th>
-                        <th>Monto</th>
                         <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody id="tablaPagos">
-                    <!-- Se cargan los pagos dinámicamente -->
+                    <!-- Los pagos se cargarán aquí dinámicamente -->
                 </tbody>
             </table>
             <button id="gestionarPago">Revisar Pago</button>
-        </section>
-
-        <!-- Subir Certificado Médico -->
-        <section>
-            <h2>Certificado Médico</h2>
-            <form id="subirCertificadoForm">
-                <label for="certificado">Sube tu certificado médico:</label>
-                <input type="file" id="certificado" accept="application/pdf" required>
-                <button type="submit">Subir</button>
-            </form>
-            <p id="estadoCertificado"></p>
         </section>
 
         <!-- Botón para cerrar sesión -->
@@ -87,7 +52,7 @@
         </section>
     </main>
     <footer>
-        <p>&copy; x2024 Sistema de Gestión Deportiva</p>
+        <p>&copy; 2024 Sistema de Gestión Deportiva</p>
     </footer>
     <script src="alumno.js"></script>
 </body>
