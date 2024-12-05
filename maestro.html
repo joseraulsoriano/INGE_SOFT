@@ -8,81 +8,76 @@
 </head>
 <body>
     <header>
-        <h1>Panel del Maestro</h1>
+        <h1>Panel Maestro</h1>
     </header>
     <main>
-        <!-- Gestión de Alumnos -->
+        <!-- Buscar Alumno -->
         <section>
-            <h2>Gestión de Alumnos</h2>
-            <form id="buscarAlumnoForm">
-                <label for="buscarAlumno">Buscar Alumno por Nombre:</label>
-                <input type="text" id="buscarAlumno" placeholder="Ejemplo: Juan Pérez">
-                <button type="submit">Buscar</button>
-            </form>
+            <h2>Buscar Alumno</h2>
+            <input type="text" id="buscarAlumno" placeholder="Nombre del alumno">
+            <button onclick="buscarAlumno()">Buscar</button>
             <div id="resultadosAlumno">
-                <!-- Resultados de búsqueda de alumnos -->
+                <!-- Aquí se mostrarán los resultados de la búsqueda -->
             </div>
         </section>
 
-        <!-- Registro de Avances -->
+        <!-- Registrar Avances -->
         <section>
             <h2>Registrar Avances</h2>
             <form id="registrarAvancesForm">
-                <label for="alumno">Seleccionar Alumno:</label>
-                <select id="alumno">
-                    <!-- Opciones cargadas dinámicamente -->
-                </select>
-                <label for="avance">Detalles del Avance:</label>
+                <label for="alumno">Email del Alumno:</label>
+                <input type="email" id="alumno" required>
+                <label for="avance">Avance:</label>
                 <textarea id="avance" required></textarea>
-                <button type="submit">Registrar</button>
+                <button type="submit">Registrar Avance</button>
             </form>
             <p id="estadoAvance"></p>
         </section>
 
-        <!-- Clases y Horarios -->
+        <!-- Enviar Recomendaciones -->
+        <section>
+            <h2>Enviar Recomendaciones</h2>
+            <form id="enviarRecomendacionForm">
+                <label for="alumnoRecomendacion">Email del Alumno:</label>
+                <input type="email" id="alumnoRecomendacion" required>
+                <label for="recomendacion">Recomendación:</label>
+                <textarea id="recomendacion" required></textarea>
+                <label for="enlaceVideo">Enlace de Video (opcional):</label>
+                <input type="url" id="enlaceVideo">
+                <button type="submit">Enviar Recomendación</button>
+            </form>
+            <p id="estadoRecomendacion"></p>
+        </section>
+
+        <!-- Clases del Profesor -->
         <section>
             <h2>Mis Clases</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Clase</th>
+                        <th>Disciplina</th>
                         <th>Horario</th>
-                        <th>Cupos Disponibles</th>
+                        <th>Capacidad</th>
                     </tr>
                 </thead>
                 <tbody id="tablaClases">
-                    <!-- Las clases asignadas se cargan dinámicamente -->
+                    <!-- Aquí se cargarán las clases del profesor -->
                 </tbody>
             </table>
         </section>
 
-        <!-- Recomendaciones -->
+        <!-- Lista de Alumnos -->
         <section>
-            <h2>Enviar Recomendaciones</h2>
-            <form id="enviarRecomendacionForm">
-                <label for="alumnoRecomendacion">Seleccionar Alumno:</label>
-                <select id="alumnoRecomendacion">
-                    <!-- Opciones cargadas dinámicamente -->
-                </select>
-                <label for="recomendacion">Recomendación:</label>
-                <textarea id="recomendacion" required></textarea>
-                <label for="enlaceVideo">Enlace a Video (Opcional):</label>
-                <input type="url" id="enlaceVideo" placeholder="https://ejemplo.com/video">
-                <button type="submit">Enviar</button>
-            </form>
-            <p id="estadoRecomendacion"></p>
-        </section>
-
-        <!-- Notificaciones de Cumpleaños -->
-        <section>
-            <h2>Cumpleaños de Alumnos</h2>
-            <ul id="cumpleaniosLista">
-                <!-- Cumpleaños se cargan dinámicamente -->
-            </ul>
+            <h2>Lista de Alumnos</h2>
+            <div id="listaAlumnos">
+                <!-- Aquí se cargarán los alumnos con su información de clases -->
+            </div>
         </section>
 
         <!-- Botón para cerrar sesión -->
-        <button id="logoutButton">Cerrar Sesión</button>
+        <section>
+            <button id="logoutButton">Cerrar Sesión</button>
+        </section>
     </main>
     <footer>
         <p>&copy; 2024 Sistema de Gestión Deportiva</p>
