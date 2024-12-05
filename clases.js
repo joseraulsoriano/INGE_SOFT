@@ -1,4 +1,4 @@
-class Alumno {
+/* class Alumno {
     constructor(nombre, email, edad, disciplina) {
         this.nombre = nombre;
         this.email = email;
@@ -56,3 +56,4 @@ const claseDanza = new Clase("Danza", "12:00 PM", 3);
 
 const alumno1 = new Alumno("Juan Pérez", "juan@example.com", 25, "Yoga");
 const profesorYoga = new Profesor("Laura", "Yoga");
+*/

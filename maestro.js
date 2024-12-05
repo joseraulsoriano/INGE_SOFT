@@ -1,3 +1,8 @@
+/* 
+
+
+
+
 // Función para cargar los datos de admin_datos.txt
 async function cargarDatos() {
     try {
@@ -196,3 +201,4 @@ document.getElementById("logoutButton").addEventListener("click", () => {
     localStorage.removeItem("rol");
     window.location.href = "index.html";
 });
+*/

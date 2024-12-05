@@ -1,3 +1,4 @@
+/*
 class Administrador {
     constructor() {
         // Inicializamos el cargado de las listas de alumnos, profesores y clases
@@ -279,3 +280,4 @@ document.getElementById("logoutButton").addEventListener("click", () => {
     localStorage.removeItem("rol");
     window.location.href = "index.html";
 });
+*/
