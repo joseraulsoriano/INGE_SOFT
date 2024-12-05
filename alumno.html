@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h1>Bienvenido al Panel del Alumno</h1>
+        <h1>Bienvenido Alumno</h1>
     </header>
     <main>
         <!-- Perfil del Alumno -->
@@ -24,7 +24,7 @@
         <section>
             <h2>Recomendaciones del Maestro</h2>
             <div id="recomendaciones">
-                <!-- Aquí aparecerán las recomendaciones -->
+                <p>Aquí aparecerán tus recomendaciones.</p>
             </div>
             <button id="consultarRecomendaciones">Consultar Recomendaciones</button>
         </section>
@@ -32,13 +32,28 @@
         <!-- Historial de Pagos -->
         <section>
             <h2>Historial de Pagos</h2>
-            <button id="gestionarPago">Gestionar Pago</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPagos">
+                    <!-- Se cargan los pagos dinámicamente -->
+                </tbody>
+            </table>
+            <button id="gestionarPago">Revisar Pago</button>
         </section>
 
-        <button id="logoutButton">Cerrar Sesión</button>
+        <!-- Botón para cerrar sesión -->
+        <section>
+            <button id="logoutButton">Cerrar Sesión</button>
+        </section>
     </main>
     <footer>
-        <p>&copy; x2024 Sistema de Gestión Deportiva</p>
+        <p>&copy; 2024 Sistema de Gestión Deportiva</p>
     </footer>
     <script src="alumno.js"></script>
 </body>

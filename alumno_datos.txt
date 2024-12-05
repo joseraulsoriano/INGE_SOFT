@@ -1,0 +1,26 @@
+{
+    "alumno": {
+        "nombre": "Juan Pérez",
+        "edad": 20,
+        "nivelEstudio": "Universitario",
+        "dondeEstudia": "Universidad Nacional",
+        "queEstudia": "Ingeniería",
+        "interesDisciplina": "Fútbol",
+        "disciplinasPrevias": ["Natación", "Baloncesto"],
+        "telefono": "123456789",
+        "matricula": "2023456",
+        "fechaNacimiento": "2003-01-15",
+        "domicilio": "Calle Falsa 123",
+        "lugarNacimiento": "Ciudad de México",
+        "peso": 70,
+        "altura": 175,
+        "estadoPagos": [
+            {"mes": "Enero", "estado": "Pagado"},
+            {"mes": "Febrero", "estado": "Pendiente"}
+        ],
+        "recomendaciones": [
+            {"fecha": "2023-01-10", "texto": "Practicar más ejercicios de resistencia."}
+        ],
+        "reservas": []
+    }
+}

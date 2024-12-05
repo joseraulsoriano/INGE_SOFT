@@ -69,7 +69,7 @@ class Alumno {
     editarPerfil(campo, nuevoValor) {
         if (["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"].includes(campo)) {
             if (campo === "disciplinasPrevias") {
-                this[campo] = nuevoValor.split(","); // Convertir en array si es disciplinasPrevias
+                this[campo] = nuevoValor.split(","); // Asumimos que las disciplinas se ingresan separadas por comas
                 alert("Disciplinas actualizadas exitosamente.");
             } else {
                 this[campo] = nuevoValor;
@@ -91,18 +91,18 @@ class Alumno {
         }
     }
 }
-// Función para cargar los datos desde base_datos.txt
+
+// Función asíncrona para cargar los datos del alumno
 async function cargarDatosAlumno() {
     try {
-        const response = await fetch("base_datos.txt"); // Ruta del archivo base_datos.txt
-        if (!response.ok) {
-            throw new Error(`Error al cargar base_datos.txt: ${response.statusText}`);
-        }
+        // Cargar el archivo alumno_datos.txt
+        const response = await fetch("alumno_datos.txt");
         const data = await response.json();
 
-        if (data.alumnos && data.alumnos.length > 0) {
-            const alumno = new Alumno(data.alumnos[0]); // Suponemos que hay un solo alumno
+        if (data.alumno) {
+            const alumno = new Alumno(data.alumno);
 
+            // Inicializar funcionalidades
             document.addEventListener("DOMContentLoaded", () => {
                 alumno.cargarPerfil();
 
@@ -114,15 +114,21 @@ async function cargarDatosAlumno() {
                 document.getElementById("editarPerfil").addEventListener("click", () => {
                     const opciones = ["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"];
                     const campo = prompt(`¿Qué campo deseas editar? Opciones: ${opciones.join(", ")}`);
+
                     if (!opciones.includes(campo)) {
                         alert("Campo inválido.");
                         return;
                     }
 
-                    const nuevoValor = prompt(`Ingresa el nuevo valor para ${campo}:`);
+                    let nuevoValor;
+                    if (campo === "disciplinasPrevias") {
+                        nuevoValor = prompt("Ingresa las nuevas disciplinas, separadas por comas:");
+                    } else {
+                        nuevoValor = prompt(`Ingresa el nuevo valor para ${campo}:`);
+                    }
+
                     if (nuevoValor) {
                         alumno.editarPerfil(campo, nuevoValor);
-                        alumno.cargarPerfil(); // Refrescar datos en pantalla
                     }
                 });
 
@@ -135,9 +141,14 @@ async function cargarDatosAlumno() {
                         alert("Datos inválidos.");
                     }
                 });
+
+                document.getElementById("logoutButton").addEventListener("click", () => {
+                    // Aquí puedes limpiar cualquier dato de sesión si es necesario
+                    window.location.href = "index.html"; // Redirige a la página de login
+                });
             });
         } else {
-            console.error("No se encontraron datos en base_datos.txt.");
+            console.error("No se encontraron datos del alumno.");
         }
     } catch (error) {
         console.error("Error al cargar los datos del alumno:", error);
