@@ -1,5 +1,6 @@
 class Administrador {
     constructor() {
+        // Inicializamos el cargado de las listas de alumnos, profesores y clases
         this.cargarListaAlumnos();
         this.cargarListaProfesores();
         this.cargarListaClases();
@@ -9,13 +10,29 @@ class Administrador {
         try {
             const response = await fetch("admin_datos.txt");
             const data = await response.json();
-            return data;
+            return data; // Retorna los datos completos
         } catch (error) {
             console.error("Error al cargar los datos de usuarios:", error);
-            return null;
+            return null; // Si hay un error, retorna null
         }
     }
 
+    // Guardar los datos en el archivo admin_datos.txt
+    async guardarDatosAdmin(datos) {
+        try {
+            await fetch("admin_datos.txt", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datos)
+            });
+        } catch (error) {
+            console.error("Error al guardar los datos de usuarios:", error);
+        }
+    }
+
+    // Cargar y mostrar la lista de alumnos
     async cargarListaAlumnos() {
         const datos = await this.cargarDatosAdmin();
         if (!datos) return;
@@ -48,7 +65,8 @@ class Administrador {
             deslindeFirmado: confirm('¿Deslinde firmado?'),
             rol: 'alumno',
             estadoPagos: [],
-            recomendaciones: []
+            recomendaciones: [],
+            reservas: []
         };
 
         if (!nuevoAlumno.nombre || !nuevoAlumno.email || !nuevoAlumno.matricula || !nuevoAlumno.certificadoMedico || !nuevoAlumno.deslindeFirmado) {
@@ -79,36 +97,13 @@ class Administrador {
             return;
         }
 
-        // Rellenar el formulario con los datos del alumno a editar
-        document.getElementById('campoEditar').innerHTML = `
-            <option value="nombre">Nombre</option>
-            <option value="email">Email</option>
-            <option value="matricula">Matrícula</option>
-            <option value="telefono">Teléfono</option>
-            <option value="fechaNacimiento">Fecha de Nacimiento</option>
-            <option value="domicilio">Domicilio</option>
-            <option value="lugarNacimiento">Lugar de Nacimiento</option>
-            <option value="peso">Peso</option>
-            <option value="altura">Altura</option>
-        `;
-        
-        document.getElementById('nuevoValor').value = "";
-        document.getElementById("formularioEditar").style.display = "block";
+        alumno.nombre = prompt('Nombre:', alumno.nombre) || alumno.nombre;
+        alumno.nivelEstudio = prompt('Nivel de estudios:', alumno.nivelEstudio) || alumno.nivelEstudio;
+        alumno.matricula = prompt('Matrícula:', alumno.matricula) || alumno.matricula;
 
-        document.getElementById("editarFormulario").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const campo = document.getElementById("campoEditar").value;
-            const nuevoValor = document.getElementById("nuevoValor").value.trim();
-            if (nuevoValor) {
-                alumno[campo] = nuevoValor;
-                alert(`${campo} actualizado exitosamente.`);
-                this.guardarDatosAdmin(datos);
-                this.cargarListaAlumnos();
-                document.getElementById("formularioEditar").style.display = "none";
-            } else {
-                alert("Por favor ingrese un valor válido.");
-            }
-        });
+        await this.guardarDatosAdmin(datos);
+        alert(`Alumno ${alumno.nombre} actualizado exitosamente.`);
+        this.cargarListaAlumnos();
     }
 
     // Eliminar un alumno
@@ -118,6 +113,7 @@ class Administrador {
 
         datos.usuarios = datos.usuarios.filter(user => user.email !== email);
         await this.guardarDatosAdmin(datos);
+        alert('Alumno eliminado exitosamente.');
         this.cargarListaAlumnos();
     }
 
@@ -140,6 +136,36 @@ class Administrador {
             .join('');
     }
 
+    // Registrar un nuevo profesor
+    async registrarProfesor() {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const nuevoProfesor = {
+            nombre: prompt('Nombre del profesor:'),
+            email: prompt('Email del profesor:'),
+            especialidades: prompt('Especialidades (separadas por comas):').split(','),
+            rol: 'maestro',
+            clases: []
+        };
+
+        if (!nuevoProfesor.nombre || !nuevoProfesor.email || nuevoProfesor.especialidades.length === 0) {
+            alert('Información faltante.');
+            return;
+        }
+
+        const yaExiste = datos.usuarios.some(user => user.email === nuevoProfesor.email);
+        if (yaExiste) {
+            alert('El profesor ya está registrado.');
+            return;
+        }
+
+        datos.usuarios.push(nuevoProfesor);
+        await this.guardarDatosAdmin(datos);
+        alert(`Profesor ${nuevoProfesor.nombre} registrado exitosamente.`);
+        this.cargarListaProfesores();
+    }
+
     // Editar un profesor
     async editarProfesor(email) {
         const datos = await this.cargarDatosAdmin();
@@ -151,29 +177,12 @@ class Administrador {
             return;
         }
 
-        document.getElementById('campoEditar').innerHTML = `
-            <option value="nombre">Nombre</option>
-            <option value="email">Email</option>
-            <option value="especialidades">Especialidades</option>
-        `;
-        
-        document.getElementById('nuevoValor').value = "";
-        document.getElementById("formularioEditar").style.display = "block";
+        profesor.nombre = prompt('Nombre:', profesor.nombre) || profesor.nombre;
+        profesor.especialidades = prompt('Especialidades (separadas por comas):', profesor.especialidades.join(',')).split(',');
 
-        document.getElementById("editarFormulario").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const campo = document.getElementById("campoEditar").value;
-            const nuevoValor = document.getElementById("nuevoValor").value.trim();
-            if (nuevoValor) {
-                profesor[campo] = (campo === "especialidades") ? nuevoValor.split(",") : nuevoValor;
-                alert(`${campo} actualizado exitosamente.`);
-                this.guardarDatosAdmin(datos);
-                this.cargarListaProfesores();
-                document.getElementById("formularioEditar").style.display = "none";
-            } else {
-                alert("Por favor ingrese un valor válido.");
-            }
-        });
+        await this.guardarDatosAdmin(datos);
+        alert(`Profesor ${profesor.nombre} actualizado exitosamente.`);
+        this.cargarListaProfesores();
     }
 
     // Eliminar un profesor
@@ -183,6 +192,7 @@ class Administrador {
 
         datos.usuarios = datos.usuarios.filter(user => user.email !== email);
         await this.guardarDatosAdmin(datos);
+        alert('Profesor eliminado exitosamente.');
         this.cargarListaProfesores();
     }
 
@@ -204,6 +214,30 @@ class Administrador {
             .join('');
     }
 
+    // Crear una nueva clase
+    async crearClase() {
+        const datos = await this.cargarDatosAdmin();
+        if (!datos) return;
+
+        const nuevaClase = {
+            disciplina: prompt('Disciplina:'),
+            horario: prompt('Horario:'),
+            capacidad: parseInt(prompt('Capacidad:')),
+            profesor: prompt('Profesor encargado:'),
+            alumnos: []
+        };
+
+        if (!nuevaClase.disciplina || !nuevaClase.horario || isNaN(nuevaClase.capacidad) || !nuevaClase.profesor) {
+            alert('Información faltante.');
+            return;
+        }
+
+        datos.clases.push(nuevaClase);
+        await this.guardarDatosAdmin(datos);
+        alert('Clase creada exitosamente.');
+        this.cargarListaClases();
+    }
+
     // Editar una clase
     async editarClase(disciplina) {
         const datos = await this.cargarDatosAdmin();
@@ -215,29 +249,13 @@ class Administrador {
             return;
         }
 
-        document.getElementById('campoEditar').innerHTML = `
-            <option value="disciplina">Disciplina</option>
-            <option value="horario">Horario</option>
-            <option value="capacidad">Capacidad</option>
-        `;
-        
-        document.getElementById('nuevoValor').value = "";
-        document.getElementById("formularioEditar").style.display = "block";
+        clase.disciplina = prompt('Disciplina:', clase.disciplina) || clase.disciplina;
+        clase.horario = prompt('Horario:', clase.horario) || clase.horario;
+        clase.capacidad = parseInt(prompt('Capacidad:', clase.capacidad)) || clase.capacidad;
 
-        document.getElementById("editarFormulario").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const campo = document.getElementById("campoEditar").value;
-            const nuevoValor = document.getElementById("nuevoValor").value.trim();
-            if (nuevoValor) {
-                clase[campo] = (campo === "capacidad") ? parseInt(nuevoValor) : nuevoValor;
-                alert(`${campo} actualizado exitosamente.`);
-                this.guardarDatosAdmin(datos);
-                this.cargarListaClases();
-                document.getElementById("formularioEditar").style.display = "none";
-            } else {
-                alert("Por favor ingrese un valor válido.");
-            }
-        });
+        await this.guardarDatosAdmin(datos);
+        alert(`Clase ${clase.disciplina} actualizada exitosamente.`);
+        this.cargarListaClases();
     }
 
     // Eliminar una clase
@@ -247,23 +265,17 @@ class Administrador {
 
         datos.clases = datos.clases.filter(c => c.disciplina !== disciplina);
         await this.guardarDatosAdmin(datos);
+        alert('Clase eliminada exitosamente.');
         this.cargarListaClases();
-    }
-
-    async guardarDatosAdmin(datos) {
-        try {
-            await fetch("admin_datos.txt", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(datos)
-            });
-        } catch (error) {
-            console.error("Error al guardar los datos:", error);
-        }
     }
 }
 
 // Crear una instancia de Administrador al cargar la página
 const administrador = new Administrador();
+
+// Cerrar sesión
+document.getElementById("logoutButton").addEventListener("click", () => {
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("rol");
+    window.location.href = "index.html";
+});
