@@ -29,7 +29,7 @@ class Alumno {
 }// Función asíncrona para cargar los datos del alumno
 async function cargarDatosAlumno() {
     try {
-        const response = await fetch("usuarios.txt"); // Cargar los datos desde el archivo
+        const response = await fetch("admin_datos.txt"); // Cargar los datos desde el archivo
         const data = await response.json();
         
         console.log("Usuarios cargados desde usuarios.txt:", data.usuarios);  // Verificar los usuarios cargados
