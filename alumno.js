@@ -1,5 +1,11 @@
+// Clase Alumno
 class Alumno {
     constructor(datos) {
+        this.fechaNacimiento = datos.fechaNacimiento;
+        this.domicilio = datos.domicilio;
+        this.lugarNacimiento = datos.lugarNacimiento;
+        this.peso = datos.peso;
+        this.altura = datos.altura;
         this.nombre = datos.nombre;
         this.edad = datos.edad;
         this.nivelEstudio = datos.nivelEstudio;
@@ -9,7 +15,7 @@ class Alumno {
         this.disciplinasPrevias = datos.disciplinasPrevias;
         this.telefono = datos.telefono;
         this.matricula = datos.matricula;
-        this.fechaNacimiento = datos.fechaNacimiento;
+    
         this.estadoPagos = datos.estadoPagos;
         this.recomendaciones = datos.recomendaciones;
     }
@@ -56,7 +62,7 @@ class Alumno {
     editarPerfil(campo, nuevoValor) {
         if (["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"].includes(campo)) {
             if (campo === "disciplinasPrevias") {
-                this[campo] = nuevoValor.split(","); // Se asume que las disciplinas se ingresan separadas por comas
+                this[campo] = nuevoValor.split(","); // Asumimos que las disciplinas se ingresan separadas por comas
                 alert("Disciplinas actualizadas exitosamente.");
             } else {
                 this[campo] = nuevoValor;
@@ -69,23 +75,17 @@ class Alumno {
 
     // Método para gestionar pagos
     gestionarPago(mes, monto) {
-        const pagoPendiente = this.estadoPagos.find(p => p.mes === mes && p.estado === "Pendiente");
-
-        if (!pagoPendiente) {
-            alert("No hay pagos pendientes para este mes o el mes ya fue pagado.");
-            return;
+        const pago = this.estadoPagos.find(p => p.mes === mes);
+        if (pago && pago.estado === "Pendiente") {
+            pago.estado = "Pagado";
+            alert("Pago registrado exitosamente.");
+        } else {
+            alert("No hay pagos pendientes para este mes.");
         }
-
-        if (monto <= 0) {
-            alert("Error: El monto ingresado no es válido.");
-            return;
-        }
-
-        // Actualizar el estado de pago
-        pagoPendiente.estado = "Pagado";
-        alert("Pago registrado exitosamente.");
     }
 }
+
+// Función asíncrona para cargar los datos del alumno
 async function cargarDatosAlumno() {
     try {
         // Cargar el archivo base_datos.txt
@@ -93,16 +93,18 @@ async function cargarDatosAlumno() {
         const data = await response.json();
 
         if (data.alumnos && data.alumnos.length > 0) {
-            const datosAlumno = data.alumnos[0]; // Suponemos un solo alumno
+            const datosAlumno = data.alumnos[0]; // Suponemos un solo alumno en la base de datos
             const alumno = new Alumno(datosAlumno);
 
             // Inicializar funcionalidades
             document.addEventListener("DOMContentLoaded", () => alumno.cargarPerfil());
 
+            // Manejo de eventos para botones
             document.getElementById("consultarRecomendaciones").addEventListener("click", () => {
                 alumno.consultarRecomendaciones();
             });
 
+            // Evento de editar perfil
             document.getElementById("editarPerfil").addEventListener("click", () => {
                 const opciones = ["nivelEstudio", "dondeEstudia", "queEstudia", "interesDisciplina", "disciplinasPrevias", "telefono", "fechaNacimiento"];
                 const campo = prompt(`¿Qué campo deseas editar? Opciones: ${opciones.join(", ")}`);
@@ -124,6 +126,7 @@ async function cargarDatosAlumno() {
                 }
             });
 
+            // Manejo del botón para gestionar pagos
             document.getElementById("gestionarPago").addEventListener("click", () => {
                 const mes = prompt("Ingrese el mes que desea pagar:");
                 const monto = parseFloat(prompt("Ingrese el monto a pagar:"));
