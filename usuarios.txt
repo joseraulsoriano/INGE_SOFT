@@ -1,7 +1,37 @@
 {
     "usuarios": {
-        "admin": { "rol": "administrador", "password": "admin123" },
-        "DOC1234": { "rol": "maestro", "password": "docpass" },
-        "2023456": { "rol": "alumno", "password": "alupass" }
+        "juan.perez@example.com": { 
+            "rol": "administrador", 
+            "password": "admin123" 
+        },
+        "ana.gomez@example.com": { 
+            "rol": "maestro", 
+            "password": "docpass" 
+        },
+        "carlos.lopez@example.com": { 
+            "rol": "alumno", 
+            "password": "alupass", 
+            "nombre": "Carlos López",
+            "edad": 20,
+            "nivelEstudio": "Universitario",
+            "dondeEstudia": "Universidad Nacional",
+            "queEstudia": "Ingeniería",
+            "interesDisciplina": "Fútbol",
+            "disciplinasPrevias": ["Natación", "Baloncesto"],
+            "telefono": "123456789",
+            "matricula": "2023456",
+            "fechaNacimiento": "2003-01-15",
+            "domicilio": "Calle Falsa 123",
+            "lugarNacimiento": "Ciudad de México",
+            "peso": 70,
+            "altura": 175,
+            "estadoPagos": [
+                {"mes": "Enero", "estado": "Pagado"},
+                {"mes": "Febrero", "estado": "Pendiente"}
+            ],
+            "recomendaciones": [
+                {"fecha": "2023-01-10", "texto": "Practicar más ejercicios de resistencia."}
+            ]
+        }
     }
 }

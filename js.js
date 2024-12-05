@@ -17,6 +17,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     const password = document.getElementById("password").value;
 
     const usuarios = await cargarUsuarios();
+    
     if (usuarios && validarCredenciales(usuarios, usuario, password)) {
         redirigirPorRol(usuarios, usuario); // Llama a la función que decide el destino
     } else {
@@ -25,15 +26,17 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 });
 
 function validarCredenciales(usuarios, usuario, password) {
+    // Verifica si el usuario existe en el objeto de usuarios y si la contraseña coincide
     return usuarios[usuario] && usuarios[usuario].password === password;
 }
 
 // Redirigir según el rol
 function redirigirPorRol(usuarios, usuario) {
-    const rol = usuarios[usuario].rol;
+    const rol = usuarios[usuario].rol; // Obtiene el rol del usuario
     localStorage.setItem("usuario", usuario); // Guardamos el usuario
     localStorage.setItem("rol", rol); // Guardamos el rol
 
+    // Redirigir según el rol del usuario
     if (rol === "administrador") {
         window.location.href = "admin.html"; // Redirige al panel del Administrador
     } else if (rol === "maestro") {
