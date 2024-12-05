@@ -29,24 +29,29 @@ class Alumno {
 }
 async function cargarDatosAlumno() {
     try {
-        const response = await fetch("usuarios.txt"); // Intentamos cargar el archivo
+        const response = await fetch("usuarios.txt");
         const data = await response.json();
-        console.log("Usuarios cargados desde usuarios.txt:", data.usuarios); // Verificamos que los datos se carguen correctamente
 
-        // Obtener el correo del alumno desde localStorage
+        console.log("Usuarios cargados desde usuarios.txt:", data.usuarios);  // Verificar los datos de usuarios
+
         const usuarioActual = localStorage.getItem("usuario");
-        console.log("Usuario actual en localStorage:", usuarioActual); // Verificamos que se haya guardado correctamente
+        console.log("Usuario actual en localStorage:", usuarioActual); // Verificar si el usuario actual está almacenado
 
-        if (data.usuarios && usuarioActual) {
-            // Verificamos que el email en usuarios.txt coincida con el usuario actual
-            const alumnoData = Object.values(data.usuarios).find(usuario => usuario.email === usuarioActual && usuario.rol === "alumno");
-            console.log("Datos del alumno encontrado:", alumnoData); // Verificamos los datos del alumno encontrado
+        if (!usuarioActual) {
+            console.error("No hay usuario guardado en localStorage");
+            return;
+        }
+
+        if (data.usuarios) {
+            // Verificamos que el correo actual coincida con el de algún alumno
+            const alumnoData = data.usuarios.find(usuario => usuario.email === usuarioActual && usuario.rol === "alumno");
+            console.log("Datos del alumno encontrado:", alumnoData); // Verificar los datos del alumno encontrado
 
             if (alumnoData) {
-                const alumno = new Alumno(alumnoData); // Crear una instancia del Alumno con los datos cargados
-                alumno.cargarPerfil(); // Cargar el perfil en la página
+                const alumno = new Alumno(alumnoData);
+                alumno.cargarPerfil();
 
-                // Agregar los eventos a los botones
+                // Agregar eventos a los botones
                 document.getElementById("consultarRecomendaciones").addEventListener("click", () => {
                     alumno.consultarRecomendaciones();
                 });
@@ -72,7 +77,6 @@ async function cargarDatosAlumno() {
                     }
                 });
 
-                // Manejo de pagos
                 document.getElementById("gestionarPago").addEventListener("click", () => {
                     const mes = prompt("Ingrese el mes que desea pagar:");
                     const monto = parseFloat(prompt("Ingrese el monto a pagar:"));
@@ -90,7 +94,7 @@ async function cargarDatosAlumno() {
                 console.error("No se encontró el alumno.");
             }
         } else {
-            console.error("No se encontraron usuarios o usuario no autenticado.");
+            console.error("No se encontraron usuarios en el archivo.");
         }
     } catch (error) {
         console.error("Error al cargar los datos del alumno:", error);
