@@ -54,7 +54,7 @@ function redirigirPorRol(usuarios, usuario) {
         } else if (rol === "maestro") {
             window.location.href = "maestro.html"; // Redirige al panel del Maestro
         } else if (rol === "alumno") {
-            window.location.href = "alumno.html"; // Redirige al panel del Alumno
+            window.location.href = "panelAlumno.html"; // Redirige al panel del Alumno
         }
     } else {
         console.error("Rol no encontrado.");
