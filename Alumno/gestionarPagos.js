@@ -39,10 +39,12 @@ class Alumno {
                 const esValido = await this.validarComprobante(comprobante);
                 if (esValido) {
                     pago.realizarPago();
+                    console.log("Pago recibido");
                     alert("Pago registrado exitosamente.");
                     this.actualizarHistorialPagos();
                     document.getElementById("formPago").style.display = "none"; // Ocultar formulario de pago
                 } else {
+                    console.log("Pago rechazado");
                     alert("Comprobante de pago inválido.");
                 }
             } else {
@@ -89,9 +91,10 @@ class Alumno {
                     const textAnnotations = data.responses[0].textAnnotations;
                     if (textAnnotations && textAnnotations.length > 0) {
                         const textoDetectado = textAnnotations[0].description;
+                        console.log("Texto detectado:", textoDetectado);
                         // Aquí puedes implementar la lógica para verificar si el texto detectado es válido
                         // Por ejemplo, podrías buscar palabras clave específicas en el texto
-                        const esValido = textoDetectado.includes('Pago') || textoDetectado.includes('Recibo');
+                        const esValido = textoDetectado.includes('Pago') || textoDetectado.includes('Recibo') || textoDetectado.includes('Transferencia') || textoDetectado.includes('Depósito');
                         resolve(esValido);
                     } else {
                         resolve(false);
